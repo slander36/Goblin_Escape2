@@ -1,7 +1,7 @@
 fsg.ge.actor = function() {
 	var actor = new fsg.ge.entity();
 	
-	actor.init = function(image,x,y,scene) {
+	actor.init = function(image,spritesheet,x,y,scene) {
 		this.scene = scene;
 		
 		var actor = this;
@@ -14,6 +14,9 @@ fsg.ge.actor = function() {
 		};
 		if(image) this.image.src = image;
 		else this.image.src = 'images/crabe.png';
+		
+		if(spritesheet) this.sprite = new fsg.sprite(this,spritesheet,4,4,4);
+		else this.sprite = null;
 		
 		if(x) actor.setX(x);
 		else actor.setX(0);
@@ -31,7 +34,11 @@ fsg.ge.actor = function() {
 	};
 	
 	actor.draw = function(ctx) {
-		if(this.image.ready) ctx.drawImage(this.image,this.x,this.y);
+		if(this.sprite) {
+			this.sprite.draw(ctx);
+		} else {
+			if(this.image.ready) ctx.drawImage(this.image,this.x,this.y);
+		}
 	};
 	
 	return actor;

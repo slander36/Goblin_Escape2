@@ -20,6 +20,12 @@ fsg.ge.scene = function() {
 		this.actors.push(actor);
 	};
 	
+	scene.update = function(timestamp) {
+		for(i in this.actors) {
+			this.actors[i].update(timestamp);
+		}
+	};
+	
 	scene.draw = function(ctx) {
 		for(i in this.actors) {
 			this.actors[i].draw(ctx);

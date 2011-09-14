@@ -18,15 +18,25 @@ fsg.ge.game = function() {
 		
 		this.scene = new fsg.ge.scene();
 		this.scene.init(this);
+		
 		this.actor = new fsg.ge.actor();
-		this.actor.init(null,64,64,this.scene);
+		this.actor.init(null,'images/Centurion_spritesheet.png',64,64,this.scene);
+		this.actor.update = function(timestamp) { this.sprite.moveDown(timestamp); };
+		
+		this.actor2 = new fsg.ge.actor();
+		this.actor2.init(null,'images/Centurion_spritesheet.png',64,128,this.scene);
+		this.actor2.update = function(timestamp) { this.sprite.moveRight(timestamp); };
+		
 		this.scene.addActor(this.actor);
+		this.scene.addActor(this.actor2);
+		
 		this.scenes.push(this.scene);
+		
 		this.currentScene = 0;
 	};
 	
 	game.update = function(timestamp) {
-		this.delta = timestamp - this.time;
+		this.scenes[this.currentScene].update(timestamp);
 	};
 	
 	game.render = function() {
@@ -40,7 +50,6 @@ fsg.ge.game = function() {
 		this.ctx.fillText("Placeholder", this.canvas.width/2, this.canvas.height/2);
 		
 		this.scenes[this.currentScene].draw(this.ctx);
-		
 	};
 	
 	return game;
